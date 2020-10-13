@@ -1,20 +1,62 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="sideMenu"></ion-menu-button>
+    </ion-buttons>
     <ion-title>
-      Blank
+      Home
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleView()">
+        <ion-icon *ngIf="!isGrid" name="grid"></ion-icon>
+        <ion-icon *ngIf="isGrid" name="list"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row *ngIf="!isGrid">
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <ion-list>
+          <ion-item *ngFor="let product of products" style="padding-top: 8px;" [routerLink]="['./', product.id]">
+            <ion-thumbnail slot="start">
+              <ion-img style="height: 70px; width: 70px; padding: 8px" [src]="product.foto"></ion-img>
+            </ion-thumbnail>
+            <ion-label style="font-size: 18px" position="stacked">
+              {{ product.merek }} {{ product.model }}
+            </ion-label>
+            <ion-label position="stacked" style="font-size: 18px;">
+              {{ product.harga | currency: "Rp. " : "symbol" }}
+            </ion-label>
+            <ion-label position="stacked" style="font-size: 18px; margin-bottom: 12px">
+              Tersedia: {{ product.stok }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-row *ngIf="isGrid">
+      <ion-col *ngFor="let product of products" size="6" [routerLink]="['./', product.id]">
+        <ion-card>
+          <ion-card-header style="display: flex; justify-content: center; align-items: center;">
+            <ion-img style="height: 100px; width: 100px;" [src]="product.foto"></ion-img>
+          </ion-card-header>
+          <ion-card-content>
+            <p style="font-size: 16px; display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+              {{ product.merek }} {{ product.model }}
+            </p>
+            <p style="font-size: 16px;">
+              {{ product.harga | currency: "Rp. " : "symbol" }}
+            </p>
+            <p style="font-size: 16px;">
+              Tersedia: {{ product.stok }}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  public isGrid: boolean;
+  public products: Array<Product>;
+  constructor(private productService: ProductService) {}
 
-  constructor() {}
+  ngOnInit() {
+    this.isGrid = false;
+  }
 
+  ionViewWillEnter() {
+    this.products = this.productService.getAllProducts();
+  }
+
+  toggleView() {
+    this.isGrid = !this.isGrid;
+  }
 }
