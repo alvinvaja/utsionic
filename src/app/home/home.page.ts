@@ -17,6 +17,9 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.products = this.productService.getAllProducts();
+    this.products = this.products.filter(product => {
+      return product.stok > 0;
+    });
   }
 
   toggleView() {

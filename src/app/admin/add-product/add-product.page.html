@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Produk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">URL Foto</ion-label>
+        <ion-input type="text" formControlName="foto" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Jenis</ion-label>
+        <ion-select  [(ngModel)]="jenis" formControlName="jenis">
+          <ion-select-option value="cpu">CPU</ion-select-option>
+          <ion-select-option value="ram">RAM</ion-select-option>
+          <ion-select-option value="motherboard">Motherboard</ion-select-option>
+          <ion-select-option value="gpu">GPU</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Merek</ion-label>
+        <ion-input type="text" formControlName="merek"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Model</ion-label>
+        <ion-input type="text" formControlName="model"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Harga</ion-label>
+        <ion-input type="number" formControlName="harga">Rp.  </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Stok</ion-label>
+        <ion-input type="number" formControlName="stok"></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf="jenis!=='gpu'" lines="none">
+        <ion-label>Detail Produk</ion-label>
+      </ion-item>
+      <ion-item *ngIf="jenis=='cpu'">
+        <ion-label position="floating">Base Clock (GHz)</ion-label>
+        <ion-input type="number" formControlName="baseclock"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='cpu'">
+        <ion-label position="floating">Boost Clock (GHz)</ion-label>
+        <ion-input type="number" formControlName="boostclock"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='cpu'">
+        <ion-label position="floating">Core</ion-label>
+        <ion-input type="number" formControlName="core"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='cpu'">
+        <ion-label position="floating">Thread</ion-label>
+        <ion-input type="number" formControlName="thread"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='ram'">
+        <ion-label position="floating">Speed (MHz)</ion-label>
+        <ion-input type="number" formControlName="speed"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='motherboard'">
+        <ion-label position="floating">Chipset</ion-label>
+        <ion-input type="text" formControlName="chipset"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="jenis=='motherboard'">
+        <ion-label position="floating">Prosesor</ion-label>
+        <ion-input type="text" formControlName="prosesor"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="full" (click)="onSubmit()" [disabled]="form.invalid">Tambah Produk</ion-button>
+  </form>
+</ion-content>

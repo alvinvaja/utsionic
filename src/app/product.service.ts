@@ -10,27 +10,48 @@ export class ProductService {
       foto: 'https://images-na.ssl-images-amazon.com/images/I/717j%2Bx%2BsAFL._AC_UL320_SR300,320_.jpg',
       model: 'i7 - 10700k',
       merek: 'Intel',
-      jenis: 'CPU',
+      jenis: 'cpu',
       harga: 5900000,
-      stok: 25
+      stok: 25,
+      baseclock: 3.80,
+      boostclock: 5.10,
+      core: 8,
+      thread: 16,
+      speed: 0,
+      chipset: '',
+      prosesor: ''
     },
     {
       id: 2,
       foto: 'https://images-na.ssl-images-amazon.com/images/I/71EXOwFSf-L._AC_UL115_.jpg',
       model: 'Vengeance LPX 16GB',
       merek: 'Corsair',
-      jenis: 'RAM',
+      jenis: 'ram',
       harga: 1250000,
-      stok: 30
+      stok: 30,
+      baseclock: 0,
+      boostclock: 0,
+      core: 0,
+      thread: 0,
+      speed: 2800,
+      chipset: '',
+      prosesor: ''
     },
     {
       id: 3,
       foto: 'https://images-na.ssl-images-amazon.com/images/I/514km%2BZccrL._AC_SL1000_.jpg',
       model: 'GEFORCE RTX 2020 TI Founders Edition',
       merek: 'NVIDIA',
-      jenis: 'GPU',
+      jenis: 'gpu',
       harga: 24000000,
-      stok: 15
+      stok: 15,
+      baseclock: 0,
+      boostclock: 0,
+      core: 0,
+      thread: 0,
+      speed: 0,
+      chipset: '',
+      prosesor: ''
     }
   ];
   constructor() { }
@@ -43,5 +64,9 @@ export class ProductService {
     return {...this.products.find(product => {
       return product.id === productId;
     })};
+  }
+
+  addProduct(product: Product) {
+    this.products.push(product);
   }
 }

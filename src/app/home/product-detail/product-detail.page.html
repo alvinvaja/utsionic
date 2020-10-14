@@ -26,8 +26,15 @@
               Tersedia: {{ product.stok }}
             </p>
           </ion-card-content>
-          <ion-footer class="ion-padding">
-            <p style="margin: 0;">Tentang Produk</p>
+          <ion-footer *ngIf="product.jenis!=='gpu'" class="ion-padding">
+            <p style="margin: 0; font-weight: bold;">Tentang Produk</p>
+            <p *ngIf="product.jenis=='cpu'" style="margin-top: 8px;">Jumlah Core : {{ product.core }}</p>
+            <p *ngIf="product.jenis=='cpu'" style="margin-top: 4px;">Jumlah Thread : {{ product.thread }}</p>
+            <p *ngIf="product.jenis=='cpu'" style="margin-top: 4px;">Base Clock : {{ product.baseclock }} GHz</p>
+            <p *ngIf="product.jenis=='cpu'" style="margin-top: 4px;">Boost Clock : {{ product.boostclock }} GHz</p>
+            <p *ngIf="product.jenis=='ram'" style="margin-top: 4px;">Speed : {{ product.speed }} MHz</p>
+            <p *ngIf="product.jenis=='motherboard'" style="margin-top: 4px;">Chipset : {{ product.chipset }}</p>
+            <p *ngIf="product.jenis=='motherboard'" style="margin-top: 4px;">Prosesor : {{ product.prosesor }}</p>
           </ion-footer>
         </ion-card>
       </ion-col>
