@@ -44,31 +44,31 @@ export class EditProductPage implements OnInit {
       }),
       harga: new FormControl(null, {
         updateOn: 'blur',
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.min(0)]
       }),
       stok: new FormControl(null, {
         updateOn: 'blur',
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.min(0)]
       }),
       baseclock: new FormControl(null, {
         updateOn: 'blur',
-        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator]
+        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator, Validators.min(0)]
       }),
       boostclock: new FormControl(null, {
         updateOn: 'blur',
-        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator]
+        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator, Validators.min(0)]
       }),
       core: new FormControl(null, {
         updateOn: 'blur',
-        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator]
+        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator, Validators.min(0)]
       }),
       thread: new FormControl(null, {
         updateOn: 'blur',
-        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator]
+        validators: [(this.jenis === 'cpu') ? Validators.required : Validators.nullValidator, Validators.min(0)]
       }),
       speed: new FormControl(null, {
         updateOn: 'blur',
-        validators: [(this.jenis === 'ram') ? Validators.required : Validators.nullValidator]
+        validators: [(this.jenis === 'ram') ? Validators.required : Validators.nullValidator, Validators.min(0)]
       }),
       chipset: new FormControl(null, {
         updateOn: 'blur',
