@@ -66,7 +66,28 @@ export class ProductService {
     })};
   }
 
+  getProductIndex(id: number) {
+    let i = 0;
+    for (i = 0; i < this.products.length; i++) {
+      if (this.products[i].id === id) {
+        return i;
+      }
+    }
+    return i;
+  }
+
   addProduct(product: Product) {
     this.products.push(product);
+  }
+
+  deleteProduct(productDeleted: Product) {
+    this.products = this.products.filter(product => {
+      return product.id !== productDeleted.id;
+    });
+  }
+
+  editProduct(product: Product) {
+    const index = this.getProductIndex(product.id);
+    this.products[index] = product;
   }
 }

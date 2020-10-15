@@ -1,31 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { ProductService } from 'src/app/product.service';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.page.html',
-  styleUrls: ['./add-product.page.scss'],
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.page.html',
+  styleUrls: ['./edit-product.page.scss'],
 })
-export class AddProductPage implements OnInit {
+export class EditProductPage implements OnInit {
   form: FormGroup;
   jenis: string;
   product: Product;
   constructor(
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
-    this.jenis = '';
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      if (!paramMap.has('productId')) { return; }
+      const productId = Number(paramMap.get('productId'));
+      this.product = this.productService.getProduct(productId);
+    });
+
+    this.jenis = this.product.jenis;
+
     this.form = new FormGroup({
       foto: new FormControl(null, {
         updateOn: 'blur',
-        validators: [Validators.required]
-      }),
-      jenis: new FormControl(null, {
-        updateOn: 'change',
         validators: [Validators.required]
       }),
       merek: new FormControl(null, {
@@ -80,13 +86,12 @@ export class AddProductPage implements OnInit {
       return;
     }
 
+    this.presentAlert();
+  }
+
+  editProduct() {
     this.product = this.getDummyProduct();
 
-    const allProducts = this.productService.getAllProducts();
-    const lastId = allProducts[allProducts.length - 1].id + 1;
-
-    this.product.id = lastId;
-    this.product.jenis = this.jenis;
     this.product.foto = this.form.value.foto;
     this.product.merek = this.form.value.merek;
     this.product.model = this.form.value.model;
@@ -104,13 +109,31 @@ export class AddProductPage implements OnInit {
       this.product.prosesor = this.form.value.prosesor;
     }
 
-    this.productService.addProduct(this.product);
+    this.productService.editProduct(this.product);
     this.router.navigateByUrl('admin');
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Edit Product',
+      message: 'Are you sure you want to edit this product?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => this.editProduct()
+        },
+        {
+          text: 'No',
+          handler: () => { this.router.navigateByUrl('admin'); }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   getDummyProduct() {
     return {
-      id: 0, foto: '', jenis: '', merek: '', model: '', harga: 0, stok: 0,
+      id: this.product.id, foto: '', jenis: '', merek: '', model: '', harga: 0, stok: 0,
       baseclock: 0, boostclock: 0, core: 0, thread: 0, speed: 0, chipset: '', prosesor: ''
     };
   }
